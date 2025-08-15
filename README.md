@@ -6,6 +6,13 @@
 <b>A FullStack Online Portal Solution allowing Cable Customers to View and Pay their Billing online:</b>
 <br/>
 <br/>
+<br/>
+
+<p align="center">
+<b>Hierchy:</b> <br/>
+<img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-CoreFunctions.jpg" height="80%" width="80%" alt="OnlineBilling Flow"/>
+<br />
+<br />
 
 
 <h2>Languages, Utilities and Dependencies </h2>
@@ -30,18 +37,8 @@
 <br/>
 
 
-<h2>Online Billing Feature Set:</h2>
 
-<br />
-CORE: <br/>
-<br />
-  
-<p align="center">
-<b>Hierchy:</b> <br/>
-<img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-CoreFunctions.jpg" height="80%" width="80%" alt="OnlineBilling Flow"/>
-<br />
-<br />
-
+<h2>Online Billing Feature Set (core):</h2>
 
 <p align="center">
 <b>Welcome:</b> <br/>
@@ -77,50 +74,12 @@ CORE: <br/>
 <br />
 <br />
 
-
-
-<p align="center">
-SignUp:  <br/>
-<img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-SignUp_i.jpg" height="80%" width="80%" alt="OnlineBilling Flow"/>
-<img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-SignUp_ii.jpg" height="80%" width="80%  
-<br />
-<br />
-
-
-<p align="center">
-Login:  <br/>
-<img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-Login.jpg" height="80%" width="80%" alt="OnlineBilling Flow"/>
-<br />
-<br />
-
-
-<p align="center">
-My  Statement:  <br/>
-<img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-Statement.jpg" height="80%" width="80%" alt="OnlineBilling Flow"/>
-<br />
-<br />
-
-<p align="center">
-My  Statement:  <br/>
-<img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-Statement.jpg" height="80%" width="80%" alt="OnlineBilling Flow"/>
-<br />
-<br />
-
-<p align="center">
-My  Statement:  <br/>
-<img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-Statement.jpg" height="80%" width="80%" alt="OnlineBilling Flow"/>
-<br />
-<br />
-
-<p align="center">
-Online Billin Windows Services: <br/>
-<img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-Services.jpg" height="80%" width="80%" alt="OnlineBilling Flow"/>
-<br />
-<br />
 </p>
 
 
-<h2>Documentation References </h2>
+
+
+<h2>Documentation References / Additional Components</h2>
 
 <!-- - <b>[Nexus Administrator](https://github.com/psZh3ePNj0/Nexus_Billing_Ticketing/blob/main/NEXUS_ADMINISTRATOR_GITHUB.docx)</b> -->
 
