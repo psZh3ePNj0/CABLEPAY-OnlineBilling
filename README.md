@@ -38,7 +38,7 @@
 
 
 
-<h2>Online Billing Feature Set (core):</h2>
+<h2>FrontEnd Component: Billing Feature Set</h2>
 
 <p align="center">
 <b>Welcome:</b> <br/>
@@ -75,20 +75,24 @@
 <br />
 
 </p>
+<br />
 
+<h2>MiddleWare Component: Billing Feature Set</h2>
+<br />
 
-
+<h2>BackEnd Component: Billing Feature Set</h2>
+<br />
 
 <h2>Documentation References / Additional Components</h2>
-
 <!-- - <b>[Nexus Administrator](https://github.com/psZh3ePNj0/Nexus_Billing_Ticketing/blob/main/NEXUS_ADMINISTRATOR_GITHUB.docx)</b> -->
+<br />
 
 
 <h2>Core Development Team</h2
                            
-  - <b>Christophe Cartwright (Java / Database Development)</b>
+  - <b>Christophe Cartwright (MiddleWare Java / BackEnd Database Development)</b>
   - <b>Clint Roberts (FrontEnd Lasso / Web Development)</b>
-  - <b>Martin Smith (Database Development / Administration)</b>
+  - <b>Martin Smith (BackEnd Database Development / Database Administration)</b>
 <br/>
 
 
