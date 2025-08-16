@@ -1,13 +1,9 @@
+<h5><b><i>Note to Reader: Where permissable - the source code will readily be provided. There are cases where IP | Copyright factors apply. In those cases the source code cannot be published without the StakeHolders consent. Thank you for your understanding.</b></i></h5>
+<br/>
+
 <h1>CABLEPAY: Online Billing Portal (Collaborative) </h1>
-
-
-<h3>Note to Reader</h3>
-                           
-  - <b>Where applicable / permissable - the source code of a listed project will readily be provided</b>
-  - <b>There are cases where IP | Copyright factors apply. In those cases the source code cannot be published</b>
-  - <b>without the StakeHolders consent. Thank you for your understanding.
 <br/>
-<br/>
+
 
 
 <h2>Description</h2>
