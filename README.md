@@ -1,4 +1,12 @@
 <h1>CABLEPAY: Online Billing Portal (Collaborative) </h1>
+
+
+<h3>Note to Reader</h3>
+                           
+  - <b>Where applicable / permissable - the source code of a listed project will readily be provided</b>
+  - <b>There are cases where IP | Copyright factors apply. In those cases the source code cannot be published</b>
+  - <b>without the StakeHolders consent. Thank you for your understanding.
+<br/>
 <br/>
 
 
@@ -80,6 +88,13 @@
 
 <h2>MiddleWare Component: Billing Feature Set</h2>
 
+- CablePay Acct Actv Module and CablePay Instruct Module are CablePay’s middle-tier Java-based components. They compose an integral part of the CablePay Billing Portal solution. 
+
+- CablePay Acct Actv Module ensure that the frontend web component of CablePay application can easily and efficiently retrieve critical data from the backend database in order that it provides customers with My Profile and My Statement viewing services. 
+
+-  CablePay Instruct Module efficiently obtains the payment instructions and credit card info submitted by the CablePay customer through the frontend Web application. It quickly relays this info for payment and credit card processing, thus providing the means and service for customers to pay their bills 
+
+
 <p align="center">
 <b>Modules -> NT Serves:</b>  <br/>
 <img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-Services.jpg" height="80%" width="80%" alt="OnlineBilling Flow"/>
@@ -91,6 +106,24 @@
 <br />
 
 <h2>BackEnd Component: Billing Feature Set</h2>
+<br />
+
+- The backend (database[s] and their objects) form the final tier component of CablePay.
+- The backend Database elemets follow best design / practice features of the rdms databases involve featuring key elements such as:
+  - Encryption
+  - Modularity
+  - Optimisation
+    
+- Database Objects involved:
+  - Stored Procedures
+  - Functions
+  - Sequences
+  - Triggers
+  - Indexes
+  - Views
+  - Synonyms 
+
+<br />
 <br />
 
 <h2>Documentation References / Additional Components</h2>
@@ -106,6 +139,8 @@
   - <b>Clint Roberts (FrontEnd Lasso / Web Development)</b>
   - <b>Martin Smith (BackEnd Database Development / Database Administration)</b>
 <br/>
+
+
 
 
 
