@@ -77,14 +77,26 @@
 </p>
 <br />
 
+
 <h2>MiddleWare Component: Billing Feature Set</h2>
+
+<p align="center">
+<b>Modules -> NT Serves:</b>  <br/>
+<img src="https://github.com/psZh3ePNj0/OnlineBilling/blob/main/OnlineBilling-Services.jpg" height="80%" width="80%" alt="OnlineBilling Flow"/>
+<br />
+<br />
+  
+
+
 <br />
 
 <h2>BackEnd Component: Billing Feature Set</h2>
 <br />
 
 <h2>Documentation References / Additional Components</h2>
-<!-- - <b>[Nexus Administrator](https://github.com/psZh3ePNj0/Nexus_Billing_Ticketing/blob/main/NEXUS_ADMINISTRATOR_GITHUB.docx)</b> -->
+
+- <b>[CablePay FrontEnd](https://github.com/psZh3ePNj0/OnlineBilling/blob/main/CablePay_Front_GITHUB.docx)</b>
+- <b>[CablePay Middletier](https://github.com/psZh3ePNj0/OnlineBilling/blob/main/CablePay_Modules_GITHUB.docx)</b>
 <br />
 
 
