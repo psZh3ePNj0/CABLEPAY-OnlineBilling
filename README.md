@@ -96,7 +96,7 @@
 <h2>Documentation References / Additional Components</h2>
 
 - <b>[CablePay FrontEnd](https://github.com/psZh3ePNj0/OnlineBilling/blob/main/CablePay_Front_GITHUB.docx)</b>
-- <b>[CablePay Middletier](https://github.com/psZh3ePNj0/OnlineBilling/blob/main/CablePay_Modules_GITHUB.docx)</b>
+- <b>[CablePay Middletier](https://github.com/psZh3ePNj0/OnlineBilling/blob/main/CablePay_Modules_GITGUB.docx)</b>
 <br />
 
 
