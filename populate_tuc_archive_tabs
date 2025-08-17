@@ -1,0 +1,198 @@
+declare
+
+	
+--Local Variables and their descriptions where needed 
+
+p_table_list 			VARCHAR2(4000):= '&1';
+p_ready_to_process 		VARCHAR2(3):= '&2';
+p_loop_lower_bound_date DATE:= '&3';
+p_loop_upper_bound_date DATE:= '&4';
+p_accounts_state 		VARCHAR2(15):= '&5';
+p_group_number			NUMBER:= &6;
+p_phase 				NUMBER:= &7;
+
+
+
+--p_lower_bound_date is parameter in mm/dd/yyyy
+p_lower_bound_date VARCHAR2(16):=to_char(p_loop_lower_bound_date,'mm/dd/yyyy');
+
+--p_upper_bound_range + p_loop_date_diff are parameters in days
+p_upper_bound_range NUMBER;
+
+
+p_user 			VARCHAR2(64):='DBPROC';
+p_group_name 	VARCHAR2(128):='SERVICE WORK CASE';
+p_activity		VARCHAR2(16):='ARCHIVE';
+
+
+-- Boundary HOurs for when Job Can Run: Currently defined between 9pm - 5am
+
+--LIVE
+--p_timestamp_stop_lowerbound      varchar2(24):= to_char(trunc(sysdate) + (1/24*5),'HH24:MI:SS');
+--p_timestamp_stop_upperbound      varchar2(24):= to_char(trunc(sysdate) + (1/24*21),'HH24:MI:SS');
+
+--TESTING
+p_timestamp_stop_lowerbound      varchar2(24):= to_char(sysdate + (1/1440*420),'HH24:MI:SS');
+p_timestamp_stop_upperbound      varchar2(24):= to_char(sysdate + (1/1440*480),'HH24:MI:SS');
+
+
+level  							NUMBER;
+level_result 					NUMBER;
+p_ready_to_process_result 		NUMBER;
+
+
+l_file      						utl_file.file_type;
+l_file_name 						VARCHAR2(100);	 
+l_dir								varchar2(30):='TUC_ARCHIVE_DIR';
+	
+
+
+
+	
+	
+begin
+
+	-------------------------------------------------------------------------------------------------------
+	SELECT  'POPULATE-TROUBLESHOOT'||TO_CHAR(SYSDATE, 'yyyymmdd-hh24mi')||'.log' INTO l_file_name FROM DUAL;
+	--------------------------------------------------------------------------------------------------------
+	
+	
+	------------------------------------------------------------------------------------------------------------------
+	--Initial Instantiation of SP <PR_READY_TO_PROCESS_TUC_ARCHIVE_TABS> for Readiness to Purge for Target Table. 
+	--Only if error occurs exit out of MASTER while loop. Once the Process completes or 9pm-5am window ends 
+	--the SP <PR_READY_TO_PROCESS_TUC_ARCHIVE_TABS> will be envoked (within SP <PR_DEPOPULATE_TUC_ARCHIVE_TABS>)
+	------------------------------------------------------------------------------------------------------------------
+	dbproc.pkg_tuc_archivepurge_p.pr_ready_to_process_tuc_archive_tabs(p_table_list,p_ready_to_process, p_ready_to_process_result);
+
+	
+	--------------------------------------------------------------------------------------------------------------------------------
+
+	--1st of 2 calls to check against the inputted lower_bound_date. Checks If previously archived / purged,
+	--input date is beyond what has been archied / purged - ie a GAP. 
+	--But also if the job stopped at say day X, but the scheuled task hasn't been updated with its input for 
+	--the lower_bound_date. This will factor in the stopped date scenario and pick up on the date where THEN
+	--job was gracefully stopped. 
+	
+	--NOTE: This works for Individual tables only. Mass Tables (OTHERS) inputted will work, but the date will reflect
+	--last completed / stopped date. If other tables have yet to be process the date fed in will be a GAP
+	--so this needs more thought.
+	
+
+	if (p_table_list <> 'OTHERS') THEN
+		dbproc.pkg_tuc_archivepurge_p.pr_lower_bound_date(p_table_list,p_activity,p_group_name,p_group_number,p_phase,p_loop_lower_bound_date);
+	end if;
+	
+	
+	p_lower_bound_date:=to_char(p_loop_lower_bound_date,'mm/dd/yyyy');	
+
+	
+	--------------------------------------------------------------------------------------------------------------------------------
+
+			
+<<loop_bound_dates>>	
+while (p_loop_lower_bound_date <  p_loop_upper_bound_date)
+loop
+		
+	--Difference in Days
+	select p_loop_upper_bound_date - p_loop_lower_bound_date into p_upper_bound_range from dual;
+
+
+	level:=0;   --Reset Level Variable
+
+  ----------------------------------------------------------------------------------------------------------------------------
+	
+	<<loop_level>>
+	while (level <= 4)
+    loop
+ 
+ 
+		level_result:=0;  --Reset Level OutPut Results
+ 
+
+		dbproc.pkg_tuc_archivepurge_p.pr_populate_tuc_archive_tabs(p_lower_bound_date,p_upper_bound_range,level,p_user,p_group_name,p_group_number,p_phase,p_timestamp_stop_lowerbound,p_timestamp_stop_upperbound,p_table_list,p_accounts_state,level_result);     
+   
+  
+		--CONDITION CASE to verify if ARCHIVING was successful for TUC tables on a given level. Level here is the level relationship
+		--of a table to the BASE table T_UC_07 (level 0). If a table is a child to T_UC_07 (example T_UC_AUDIT_06)
+		--then the table is level 1.  And so on....
+	
+	               
+        if ((level_result = 1) or (level_result = -888)) then 
+		
+			level := level + 1;
+			
+							----------------
+							
+							
+ 		--special case when we are outside of Job Interval Window - we want to exit fully from JOB
+        elsif (level_result = -999) then 
+
+				------------------------------------------------------------------------------------------------------------------
+				--We have reach here Process is outside Job Interval Window - Gracefully Exit.
+				--Call SP <PR_READY_TO_PROCESS_TUC_ARCHIVE_TABS> to disable Readiness of Purge. 
+				--Exit JOB via outter loop <<loop_bound_dates>>
+				------------------------------------------------------------------------------------------------------------------
+				dbproc.pkg_tuc_archivepurge_p.pr_ready_to_process_tuc_archive_tabs(p_table_list,'NO', p_ready_to_process_result);		
+				
+				exit loop_bound_dates;
+
+
+								----------------
+								
+        elsif (level_result = 0) then 
+		
+				------------------------------------------------------------------------------------------------------------------
+				--We have reach here Process was unsuccessful
+				--Call SP <PR_READY_TO_PROCESS_TUC_ARCHIVE_TABS> to disable Readiness of Purge. 
+				--Exit JOB via outter loop <<loop_bound_dates>>
+				------------------------------------------------------------------------------------------------------------------
+				dbproc.pkg_tuc_archivepurge_p.pr_ready_to_process_tuc_archive_tabs(p_table_list,'NO', p_ready_to_process_result);		
+				
+				exit loop_bound_dates;
+	
+	
+	
+		else 
+		
+			exit loop_bound_dates;
+			
+	
+	
+        end if;
+        
+    end loop loop_level;
+
+  
+      --CONDITION CASE to verify if ARCHIVING was successful for TUC tables on a given level. Level here is the level relationship
+      --of a table to the BASE table T_UC_07 (level 0). If a table is a child to T_UC_07 (example T_UC_AUDIT_06)
+      --then the table is level 1.  And so on....
+      
+  if (level >= 5) then
+      select to_char((to_date(p_lower_bound_date,'mm/dd/rrrr') + p_upper_bound_range),'mm/dd/yyyy') into p_lower_bound_date from dual;
+      p_loop_lower_bound_date:=p_loop_lower_bound_date +p_upper_bound_range;
+	  
+      	  
+  else 
+	exit loop_bound_dates;
+	
+
+  end if; 
+  
+  
+  ----------------------------------------------------------------------------------------------------------------------------  
+
+end loop loop_bound_dates;
+
+
+		------------------------------------------------------------------------------------------------------------------
+		--We have reach here Process was successful or not Applicable - Gracefully Exit.
+		--Call SP <PR_READY_TO_PROCESS_TUC_ARCHIVE_TABS> to disable Readiness of Purge. 
+		--Exit SP with success code = 1
+		------------------------------------------------------------------------------------------------------------------
+		dbproc.pkg_tuc_archivepurge_p.pr_ready_to_process_tuc_archive_tabs(p_table_list,'NO', p_ready_to_process_result);
+
+
+  
+end;
+/
+
